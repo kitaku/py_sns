@@ -1,0 +1,37 @@
+{% extends 'sns/layout.html' %}
+
+{% block title %}Index{% endblock %}
+
+{% block header %}
+<h1>SNS</h1>
+
+{% if messages %}
+<ul class="messages">
+  {% for item in messages %}
+  <li{% if item.tags %} class="{{item.tags}}" {% endif %}>{{item}}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+
+{% for item in contents %}
+<hr>
+<p class="message_content">{{item.content}}</p>
+<p class="message_date">{{item.pub_date}}</p>
+{% if item.share_id >0 %}
+  <hr class="share_line">
+  <p class="share_item_content">{{item.get_share}}</p>
+{% endif %}
+<p class="message_owner">
+  <span class="message_content">share={{item.share_count}}
+    good={{item.good_count}}
+  </span>
+  "{{item.owner}}"
+  <a href="{% url 'share' item.id %}"><button type="button" name="button">share</button></a>
+  <a href="{% url 'good' item.id %}"><button type="button" name="button">good!</button></a>
+</p>
+{%  endfor %}
+{% endblock %}
