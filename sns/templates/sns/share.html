@@ -1,4 +1,4 @@
-{% extends 'hitokoto/layout.html' %}
+{% extends 'sns/layout.html' %}
 
 {% block title  %}Share{% endblock %}
 
@@ -14,7 +14,7 @@
 {% endif %}
 {% endblock %}
 
-{% blockcontent %}
+{% block content %}
 <p class="share_content">{{share.content}}({{share.owner}})</p>
 <form class="" action="{% url 'share' share.id %}" method="post">
   {% csrf_token %}

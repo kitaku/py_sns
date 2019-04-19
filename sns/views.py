@@ -58,11 +58,6 @@ def share(request, share_id):
 
         content = request.POST['content']
 
-        group = Group.objects.filter(owner=request.user).filter(title=gr_name).first()
-
-        if group == None:
-            (pub_user, group) = get_public()
-
         msg = Message()
         msg.owner = request.user
         msg.content = content
@@ -99,8 +94,8 @@ def good(request, good_id):
     good_msg.save()
     good = Good()
     good.owner = request.user
-    good.Message = good_msg
+    good.message = good_msg
     good.save()
 
-    message.success(request, 'メッセージにグッドしました!')
+    messages.success(request, 'メッセージにグッドしました!')
     return redirect(to='/sns')
