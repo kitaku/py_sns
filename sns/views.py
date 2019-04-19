@@ -41,7 +41,7 @@ def post(request):
         return redirect(to='/sns')
 
     else:
-        form = PostForm(request.User)
+        form = PostForm(request.user)
 
     params = {
         'login_user' : request.user,
@@ -61,7 +61,7 @@ def share(request, share_id):
         msg = Message()
         msg.owner = request.user
         msg.content = content
-        msg.share_id = share_id
+        msg.share_id = share.id
         msg.save()
         share_msg = msg.get_share()
         share_msg.share_count +=1
