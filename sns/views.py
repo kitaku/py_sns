@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 from .models import Message, Friend, Good
-from .forms import  SearchForm, FriendForm, PostForm
+from .forms import  MessageForm, SearchForm, FriendForm, PostForm
 
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -11,18 +11,28 @@ from django.contrib.auth.decorators import login_required
 #index
 @login_required(login_url='/accounts/login/')
 def index(request):
+    # POST
+    if request.method == 'POST':
+        content = request.POST['content']
+        msg = Message()
+        msg.owner = request.user
+        msg.content = content
+        msg.save()
 
-    #POST
-    if request.method == 'GET':
+        # messages.success(request, '新しいメッセージを投稿しました!')
+        return redirect(to='/sns')
 
+    elif request.method == 'GET':
         messages = Message.objects.all()
+        form = PostForm(request.POST)
+
 
     #共通処理
     params = {
         'login_user' : request.user,
+        'form' : form,
         'contents' : messages,
     }
-
     return render(request, 'sns/index.html' , params)
 
 #メッセージPOST処理
@@ -40,8 +50,11 @@ def post(request):
         messages.success(request, '新しいメッセージを投稿しました!')
         return redirect(to='/sns')
 
-    else:
-        form = PostForm(request.user)
+    # else:
+    #     form = PostForm(request.user)
+
+    if request.method == 'GET':
+        form = PostForm(request.POST)
 
     params = {
         'login_user' : request.user,
@@ -67,10 +80,13 @@ def share(request, share_id):
         share_msg.share_count +=1
         share_msg.save()
 
-        messages.success(request, 'メッセージをシェアしました!')
+        # messages.success(request, 'メッセージをシェアしました!')
         return redirect(to='/sns')
 
-    form = PostForm(request.user)
+    if request.method == 'GET':
+        form = PostForm(request.POST)
+
+    # form = PostForm(request.user)
     params = {
         'login_user' : request.user,
         'form' : form,

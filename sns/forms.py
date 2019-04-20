@@ -3,7 +3,7 @@ from .models import Message,Friend,Good
 from django .contrib.auth.models import User
 
 #Messageフォーム
-class MEssageForm(forms.ModelForm):
+class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ['owner','content']
