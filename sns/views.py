@@ -80,7 +80,7 @@ def share(request, share_id):
         share_msg.share_count +=1
         share_msg.save()
 
-        # messages.success(request, 'メッセージをシェアしました!')
+        messages.success(request, 'メッセージをシェアしました!')
         return redirect(to='/sns')
 
     if request.method == 'GET':
@@ -101,17 +101,24 @@ def good(request, good_id):
     #good数を調べる
     is_good = Good.objects.filter(owner = request.user).filter(message=good_msg).count()
     #0より大きければ既にgood済み
-    if is_good > 0:
-        messages.success(request, '既にメッセージにはGoodしています。')
+    print(is_good)
+    if is_good % 2 != 0:
+        # messages.success(request, '既にメッセージにはGoodしています。')
+        good_msg.good_count -=1
+        good_msg.save()
+        good = Good()
+        good.owner = request.user
+        good.message = good_msg
+        good.save()
         return redirect(to='/sns')
+    else:
+        #Messageのgood_countを増やす
+        good_msg.good_count +=1
+        good_msg.save()
+        good = Good()
+        good.owner = request.user
+        good.message = good_msg
+        good.save()
 
-    #Messageのgood_countを増やす
-    good_msg.good_count +=1
-    good_msg.save()
-    good = Good()
-    good.owner = request.user
-    good.message = good_msg
-    good.save()
-
-    messages.success(request, 'メッセージにグッドしました!')
-    return redirect(to='/sns')
+        messages.success(request, 'メッセージにグッドしました!')
+        return redirect(to='/sns')
