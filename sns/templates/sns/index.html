@@ -3,7 +3,10 @@
 {% block title %}Index{% endblock %}
 
 {% block header %}
-<h1>SNS</h1>
+
+{% endblock %}
+
+{% block content %}
 
 {% if messages %}
 <ul class="messages">
@@ -22,9 +25,6 @@
     </tr>
   </form>
 </table>
-{% endblock %}
-
-{% block content %}
 
 <div class="ui segments">
   <div class="ui blue segment">
