@@ -26,4 +26,4 @@ class SearchForm(forms.Form):
 
 #投稿フォーム
 class PostForm(forms.Form):
-    content = forms.CharField(max_length=500, widget=forms.Textarea)
+    content = forms.CharField(max_length=100, widget=forms.Textarea(attrs={'placeholder' : 'いまどうしてる？' , 'cols': 40, 'rows' : 5}))

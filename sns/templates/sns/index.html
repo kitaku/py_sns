@@ -7,38 +7,112 @@
 {% endblock %}
 
 {% block content %}
+<div class="ui grid">
+  <div class="six wide column">
+    <div class="ui card">
+      <div class="image">
+        <img src="../../static/image/sample.jpg">
+      </div>
+      <div class="content">
+        <a class="header">{{login_user}}</a>
+        <div class="meta">
+          <span class="date">コメント　コメント　コメント　コメント　コメント　</span>
+        </div>
+        <div class="description">
+          Kristy is an art director living in New York.
+        </div>
+      </div>
+      <div class="extra content">
+        <a>
+          <i class="user icon"></i>
+          <!-- 22 Friends -->
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="ten wide column">
+    {% if messages %}
+    <ul class="messages">
+      {% for item in messages %}
+      <li{% if item.tags %} class="{{item.tags}}" {% endif %}>{{item}}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="ui segment">
+      <form class="ui form" action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        {{form.content}}
+            <button class="ui huge button" type="submit" name="button">送信</button>
+      </form>
+    </div>
 
-{% if messages %}
+    <div class="ui segments">
+      {% for item in contents %}
+      <div class="ui segment">
+        <h2 class="ui header">
+          {{item.owner}}
+        </h2>
+        <div class="contents">
+          {% if item.share_id > 0 %}
+            <p class="share_item_content">
+              <i class="retweet icon">
+                <!-- user:{{login_user}} -->
+              </i>
+              {{item.get_share}}
+            </p>
+          {% endif %}
+          {{item.content}}
+        </div>
+        <h3 class="icons">
+          <a href="{% url 'share' item.id %}">
+            <i class="retweet icon">{{item.share_count}}</i>
+          </a>
+          <a href="{% url 'good' item.id %}">
+            <i class="heart outline icon">{{item.good_count}}</i>
+          </a>
+        </h3>
+          <div class="sub header">
+            {{item.pub_date}}
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class=" ui segment">
+  <div class="field">
+    user:{{login_user}}
+  </div>
+</div> -->
+
+<!-- {% if messages %}
 <ul class="messages">
   {% for item in messages %}
   <li{% if item.tags %} class="{{item.tags}}" {% endif %}>{{item}}</li>
   {% endfor %}
 </ul>
 {% endif %}
-<table>
+<div class="ui segment">
   <form class="ui form" action="{% url 'index' %}" method="post">
     {% csrf_token %}
-    {{form.as_table}}
-    <tr>
-      <td></td>
-      <td><input type="submit" name="" value="send"></td>
-    </tr>
+    {{form.content}}
+        <button class="ui huge button" type="submit" name="button">送信</button>
   </form>
-</table>
+</div> -->
 
-<div class="ui segments">
-  <div class="ui blue segment">
-    {% for item in contents %}
+<!-- <div class="ui segments">
+  {% for item in contents %}
+  <div class="ui segment">
     <h2 class="ui header">
       {{item.owner}}
     </h2>
     <div class="contents">
-      <!-- {% if item.share_id > 0 %}
+      {% if item.share_id > 0 %}
         <p class="share_item_content">{{item.get_share}}</p>
-      {% endif %} -->
+      {% endif %}
       {{item.content}}
-      <!-- <div class="ui primary label">
-      </div> -->
     </div>
     <h3 class="icons">
       <a href="{% url 'share' item.id %}">
@@ -51,9 +125,9 @@
       <div class="sub header">
         {{item.pub_date}}
       </div>
-    {% endfor %}
   </div>
-</div>
+  {% endfor %}
+</div> -->
 
 
 {% endblock %}

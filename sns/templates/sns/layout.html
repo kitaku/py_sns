@@ -13,30 +13,26 @@
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
-    <!-- <div class="body_content">
-      <div class="body_content_inner"> -->
-        <!-- <table class="login_table" width="100%">
-          <tr><th width="150px">menu</th><td>
-          </td></tr>
-          <tr>
-            <th width="150px">login user:</th>
-            <td>"{{login_user}}"</td>
-          </tr>
-        </table> -->
-        <div class="ui main container">
-          <div class="header">
-            {% block header %}
-            {% endblock %}
-          </div>
-          <div class="content">
-            {% block content %}
-            {%  endblock%}
-          </div>
-          <div class="footer">
+    <div class="ui main container">
+
+      <div class="header">
+        <div class="ui large borderless fixed fluid menu column">
+          <a class="header item" href="{% url 'index' %}">Twitter</a>
+          <div class="right item">
+            <a class="ui button" >Log in</a>
+            <a class="ui button" >Sign Up</a>
+            <a href="#" class="ui button">sign out</a>
           </div>
         </div>
-      <!-- </div>
-    </div> -->
-
+        {% block header %}
+        {% endblock %}
+      </div>
+      <div class="content">
+        {% block content %}
+        {%  endblock%}
+      </div>
+      <div class="footer">
+      </div>
+    </div>
   </body>
 </html>
