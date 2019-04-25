@@ -16,12 +16,24 @@
     <div class="ui main container">
 
       <div class="header">
-        <div class="ui large borderless fixed fluid menu column">
-          <a class="header item" href="{% url 'index' %}">Twitter</a>
-          <div class="right item">
-            <a class="ui button" >Log in</a>
-            <a class="ui button" >Sign Up</a>
-            <a href="#" class="ui button">sign out</a>
+        <div class="ui secondary borderless fixed pointing menu ">
+          <a class="active item" href="{% url 'index' %}">
+            <i class="home large icon"></i>
+            Home
+          </a>
+          <a class="item" href="#">
+            <i class="envelope outline large icon"></i>
+            Message
+          </a>
+          <a class="item" href="#">
+            <i class="user outline large icon"></i>
+            Friends
+          </a>
+          <div class="right menu">
+            <a href="{% url 'login' %}" class="ui item">
+              <i class="sign out alternate large icon"></i>
+              sign out
+            </a>
           </div>
         </div>
         {% block header %}

@@ -18,15 +18,10 @@ def index(request):
         msg.owner = request.user
         msg.content = content
         msg.save()
-
-        # messages.success(request, '新しいメッセージを投稿しました!')
         return redirect(to='/sns')
-
     elif request.method == 'GET':
         messages = Message.objects.all()
         form = PostForm(request.POST)
-
-
     #共通処理
     params = {
         'login_user' : request.user,
@@ -122,3 +117,15 @@ def good(request, good_id):
 
         messages.success(request, 'メッセージにグッドしました!')
         return redirect(to='/sns')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'sns/signup.html', {'form' : form})

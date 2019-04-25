@@ -1,6 +1,7 @@
 from django import forms
 from .models import Message,Friend,Good
 from django .contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 #Messageフォーム
 class MessageForm(forms.ModelForm):
@@ -27,3 +28,7 @@ class SearchForm(forms.Form):
 #投稿フォーム
 class PostForm(forms.Form):
     content = forms.CharField(max_length=100, widget=forms.Textarea(attrs={'placeholder' : 'いまどうしてる？' , 'cols': 40, 'rows' : 5}))
+
+class SignUpForm(UserCreationForm):
+    class Meta:
+        fields = ('username', 'email', 'password1', 'password2')

@@ -1,5 +1,8 @@
 body{
-    background-color: #DADADA;
+    background-color: #E0ECF8;
+}
+.ui.secondary.pointing.menu{
+  background-color: white;
 }
 .right.item.ui.button{
   margin-right: 5px;

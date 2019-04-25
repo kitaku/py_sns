@@ -1,0 +1,45 @@
+{% extends 'accounts/layout.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+
+<div class="ui main container">
+  <div class="ui segment">
+    <form class="ui large form" action="{% url 'signup' %}" method="post">
+      {% csrf_token %}
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="user icon"> </i>
+          {{form.username}}
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="lock icon"> </i>
+
+          {{form.password1}}
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui left icon input">
+          <i class="lock icon"> </i>
+          {{form.password2}}
+        </div>
+      </div>
+      <!-- {{form.as_p}} -->
+      <button class="ui fluid huge teal button" type="submit" name="button">Create a new account</button>
+
+      {# エラーメッセージ表示 #}
+      {% if form.errors %}
+        {% for field in form %}
+          {% for error in field.errors %}
+            <p>{{error}}</p>
+          {% endfor %}
+        {% endfor %}
+      {% endif %}
+    </form>
+  </div>
+</div>
+
+{% endblock %}
