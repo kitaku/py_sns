@@ -5,6 +5,12 @@ from django.contrib import messages
 from .models import Message, Friend, Good
 from .forms import  MessageForm, SearchForm, FriendForm, PostForm
 
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
+from .forms import SignUpForm
+
+
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
