@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class Message(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='message_owner')
     content = models.TextField(max_length=280)
+    image = models.ImageField(upload_to = 'documents/', default='defo', null=True, blank=True)
     share_id = models.IntegerField(default= -1)
     good_count = models.IntegerField(default=0)
     share_count = models.IntegerField(default=0)

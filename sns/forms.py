@@ -28,6 +28,7 @@ class SearchForm(forms.Form):
 #投稿フォーム
 class PostForm(forms.Form):
     content = forms.CharField(max_length=100, widget=forms.Textarea(attrs={'placeholder' : 'いまどうしてる？' , 'cols': 40, 'rows' : 5}))
+    image = forms.ImageField(label='画像ファイル')
 
 class SignUpForm(UserCreationForm):
     class Meta:

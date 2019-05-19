@@ -30,6 +30,7 @@
       </div>
     </div>
   </div>
+
   <div class="ten wide column">
     {% if messages %}
     <ul class="messages">
@@ -39,10 +40,11 @@
     </ul>
     {% endif %}
     <div class="ui segment">
-      <form class="ui form" action="{% url 'index' %}" method="post">
+      <form class="ui form" action="{% url 'index' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.content}}
-            <button class="ui huge button" type="submit" name="button">送信</button>
+        {{form.image}}
+        <button class="ui huge blue button" type="submit" name="button">ツイート</button>
       </form>
     </div>
 
@@ -53,15 +55,18 @@
           {{item.owner}}
         </h2>
         <div class="contents">
+          <img src="{{item.image.url}}" alt="" width="100", height="100"/>
+          <!-- {{item.image}} -->
+          {{item.content}}
           {% if item.share_id > 0 %}
             <p class="share_item_content">
-              <i class="retweet icon">
-                <!-- user:{{login_user}} -->
-              </i>
-              {{item.get_share}}
+              <div class="ui segment">
+                <i class="retweet icon">
+                </i>
+                {{item.get_share}}
+              </div>
             </p>
           {% endif %}
-          {{item.content}}
         </div>
         <h3 class="icons">
           <a href="{% url 'share' item.id %}">
@@ -79,55 +84,4 @@
     </div>
   </div>
 </div>
-
-
-<!-- <div class=" ui segment">
-  <div class="field">
-    user:{{login_user}}
-  </div>
-</div> -->
-
-<!-- {% if messages %}
-<ul class="messages">
-  {% for item in messages %}
-  <li{% if item.tags %} class="{{item.tags}}" {% endif %}>{{item}}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-<div class="ui segment">
-  <form class="ui form" action="{% url 'index' %}" method="post">
-    {% csrf_token %}
-    {{form.content}}
-        <button class="ui huge button" type="submit" name="button">送信</button>
-  </form>
-</div> -->
-
-<!-- <div class="ui segments">
-  {% for item in contents %}
-  <div class="ui segment">
-    <h2 class="ui header">
-      {{item.owner}}
-    </h2>
-    <div class="contents">
-      {% if item.share_id > 0 %}
-        <p class="share_item_content">{{item.get_share}}</p>
-      {% endif %}
-      {{item.content}}
-    </div>
-    <h3 class="icons">
-      <a href="{% url 'share' item.id %}">
-        <i class="retweet icon">{{item.share_count}}</i>
-      </a>
-      <a href="{% url 'good' item.id %}">
-        <i class="heart outline icon">{{item.good_count}}</i>
-      </a>
-    </h3>
-      <div class="sub header">
-        {{item.pub_date}}
-      </div>
-  </div>
-  {% endfor %}
-</div> -->
-
-
 {% endblock %}

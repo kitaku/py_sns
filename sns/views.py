@@ -9,19 +9,24 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
 #index
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/sns/login/')
 def index(request):
     # POST
     if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if not form.is_valid():
+            raise ValueError('invalid form')
         content = request.POST['content']
         msg = Message()
         msg.owner = request.user
         msg.content = content
+        msg.image = form.cleaned_data['image']
         msg.save()
+        # form.save()
         return redirect(to='/sns')
     elif request.method == 'GET':
         messages = Message.objects.all()
-        form = PostForm(request.POST)
+        form = PostForm(request.POST,request.FILES)
     #共通処理
     params = {
         'login_user' : request.user,
@@ -31,7 +36,7 @@ def index(request):
     return render(request, 'sns/index.html' , params)
 
 #メッセージPOST処理
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/sns/login/')
 def post(request):
     # POST送信時の処理
     if request.method == 'POST':
@@ -58,7 +63,7 @@ def post(request):
     return render(request, 'sns/post.html', params)
 
 #投稿をシェアする
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/sns/login')
 def share(request, share_id):
     share = Message.objects.get(id=share_id)
 
@@ -90,7 +95,7 @@ def share(request, share_id):
     return render(request, 'sns/share.html', params)
 
 #goodボタン
-@login_required(login_url='/accounts/login')
+@login_required(login_url='/sns/login')
 def good(request, good_id):
     good_msg = Message.objects.get(id = good_id)
     #good数を調べる
